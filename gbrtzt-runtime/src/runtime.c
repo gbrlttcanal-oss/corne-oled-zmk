@@ -73,8 +73,8 @@ static int settings_set(const char *name,size_t len,settings_read_cb read_cb,voi
     memcpy(dst,blob+16,size);revisions[kind-1][slot]=gbr_u32(blob+8);rc=0;
 done:k_mutex_unlock(&runtime_lock);return rc;
 }
-static int settings_commit(void) { if(gbr_rgb_supported())k_work_reschedule(&rgb_work,K_MSEC(300));return 0; }
-SETTINGS_STATIC_HANDLER_DEFINE(gbrtzt,"gbrtzt",NULL,settings_set,settings_commit,NULL);
+static int gbr_settings_commit(void) { if(gbr_rgb_supported())k_work_reschedule(&rgb_work,K_MSEC(300));return 0; }
+SETTINGS_STATIC_HANDLER_DEFINE(gbrtzt,"gbrtzt",NULL,settings_set,gbr_settings_commit,NULL);
 
 /* One macro at a time. Playback snapshots the slot; editing it cannot change a
  * running sequence. No bulk behavior queue: long text cannot overflow it. */

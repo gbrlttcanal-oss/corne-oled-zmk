@@ -18,3 +18,8 @@ jobs:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
     with:
       archive_name: gbrtzt-runtime-v1-firmware
+  rgb-compile-check:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    with:
+      build_matrix_path: build-rgb-check.yaml
+      archive_name: compile-check-only-rgb
