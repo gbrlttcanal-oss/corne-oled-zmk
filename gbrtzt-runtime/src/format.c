@@ -24,7 +24,7 @@ int gbr_validate(uint8_t kind, const uint8_t *d, size_t len) {
     if (count>GBR_STEPS || d[290]>1 || d[291]>1 || !memchr(d+32,0,256)) return -EINVAL;
     for(unsigned i=0;i<count;i++) { const uint8_t *s=d+292+i*8; unsigned type=s[0], ms=gbr_u16(s+2); uint32_t code=gbr_u32(s+4);
         if (s[1] || type>3 || ms>5000 || (type==3 ? code!=0 : !gbr_hid_valid(code))) return -EINVAL;
-        duration+=ms+(type==0?10:0); if(duration>30000)return -EINVAL;
+        duration+=type==0?(ms<10?10:ms)+10:(ms?ms:1); if(duration>30000)return -EINVAL;
         unsigned j=0;while(j<held_count && held[j]!=code)j++;
         if(type==0 && j<held_count)return -EINVAL;
         if(type==1) { if(j<held_count || held_count==16)return -EINVAL; held[held_count++]=code; }

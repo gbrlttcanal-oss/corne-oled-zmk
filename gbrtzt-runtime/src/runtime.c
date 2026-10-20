@@ -92,11 +92,11 @@ static void macro_tick(struct k_work *work) {
     k_mutex_lock(&runtime_lock,K_FOREVER);if(!player.active)goto done;
     if(player.index>=player.count){player_release();goto done;}
     const uint8_t *s=player.data+292+player.index*8;unsigned type=s[0],ms=gbr_u16(s+2);uint32_t code=gbr_u32(s+4);int rc=0;
-    if(player.tap_up){rc=key_event(code,player.event,false);if(player.held_count)player.held_count--;
+    if(player.tap_up){rc=key_event(code,player.event,false);if(rc>=0&&player.held_count)player.held_count--;
         player.tap_up=false;player.index++;ms=10;
     } else if(type==0){rc=key_event(code,player.event,true);if(rc>=0){player.held[player.held_count++]=code;player.tap_up=true;}ms=MAX(ms,10);}
     else {if(type==1){rc=key_event(code,player.event,true);if(rc>=0)player.held[player.held_count++]=code;}
-        else if(type==2){rc=key_event(code,player.event,false);for(unsigned i=0;i<player.held_count;i++)if(player.held[i]==code){player.held[i]=player.held[--player.held_count];break;}}
+        else if(type==2){rc=key_event(code,player.event,false);if(rc>=0)for(unsigned i=0;i<player.held_count;i++)if(player.held[i]==code){player.held[i]=player.held[--player.held_count];break;}}
         player.index++;}
     if(rc<0){player_release();goto done;}k_work_reschedule(&macro_work,K_MSEC(MAX(ms,1)));
 done:k_mutex_unlock(&runtime_lock);
