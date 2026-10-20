@@ -1,0 +1,13 @@
+menuconfig GBRTZT_RUNTIME
+    bool "GbrTzT persistent macros, tap dance and RGB configuration"
+    default n
+    depends on SETTINGS
+
+if GBRTZT_RUNTIME
+config ZMK_STUDIO_RPC_RX_BUF_SIZE
+    default 4096
+config ZMK_STUDIO_RPC_CUSTOM_SUBSYSTEM_REQUEST_PAYLOAD_MAX_BYTES
+    default 1536
+config ZMK_STUDIO_RPC_THREAD_STACK_SIZE
+    default 8192
+endif

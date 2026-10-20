@@ -1,0 +1,3 @@
+description: Persistent runtime tap dance slot
+compatible: "gbrtzt,tap-dance"
+include: one_param.yaml

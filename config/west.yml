@@ -1,13 +1,14 @@
 manifest:
   remotes:
     - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
+      url-base: https://github.com/cormoran
     # Additional modules containing boards/shields/custom code can be listed here as well
     # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: v0.3
+      # ZMK v0.3-based fork with custom Studio RPC; pinned for reproducible builds.
+      revision: 4493783ef88ce2e653bf8217c92ee17140df71e3
       import: app/west.yml
   self:
     path: config

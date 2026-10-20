@@ -1,0 +1,29 @@
+name: GbrTzT runtime test firmware
+on:
+  push:
+    branches: [gbrtzt-runtime-v1]
+  pull_request:
+    branches: [master]
+    paths: ['gbrtzt-runtime/**', 'config/**', 'zephyr/**', 'build.yaml', 'build-rgb-check.yaml', '.github/workflows/gbrtzt-runtime.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  format-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -Igbrtzt-runtime/include gbrtzt-runtime/src/format.c gbrtzt-runtime/tests/format-test.c -o /tmp/gbrtzt-format-test && /tmp/gbrtzt-format-test
+      - run: cc -std=c11 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unused-function -Wno-misleading-indentation -fsanitize=address,undefined -Igbrtzt-runtime/tests/host -Igbrtzt-runtime/include gbrtzt-runtime/src/format.c gbrtzt-runtime/tests/runtime-test.c -o /tmp/gbrtzt-runtime-test && /tmp/gbrtzt-runtime-test
+  firmware:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    with:
+      archive_name: gbrtzt-runtime-v1-firmware
+  rgb-compile-check:
+    # The upstream reusable workflow merges and deletes all artifact-* files.
+    # Run after the main archive to keep the two artifact sets separate.
+    needs: firmware
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+    with:
+      build_matrix_path: build-rgb-check.yaml
+      archive_name: compile-check-only-rgb
