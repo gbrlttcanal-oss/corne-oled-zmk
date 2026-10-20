@@ -1,0 +1,14 @@
+/ {
+    behaviors {
+        gbr_macro: gbr_macro {
+            compatible = "gbrtzt,macro";
+            #binding-cells = <1>;
+            display-name = "GbrTzT Macro";
+        };
+        gbr_dance: gbr_dance {
+            compatible = "gbrtzt,tap-dance";
+            #binding-cells = <1>;
+            display-name = "GbrTzT Tap Dance";
+        };
+    };
+};

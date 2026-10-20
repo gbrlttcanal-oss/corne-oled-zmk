@@ -1,0 +1,7 @@
+if(CONFIG_GBRTZT_RUNTIME)
+  zephyr_include_directories(include)
+  target_sources(app PRIVATE src/format.c src/runtime.c src/behaviors.c)
+  if(CONFIG_ZMK_STUDIO)
+    target_sources(app PRIVATE src/rpc.c)
+  endif()
+endif()
