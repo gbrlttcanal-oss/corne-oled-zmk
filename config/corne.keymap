@@ -64,3 +64,13 @@
         };
 };
 
+
+/*
+ * GbrTzT RGB test: 27 addressable LEDs per side, matching PandaKB
+ * QMK RGB_MATRIX_SPLIT {27,27}. The standard ZMK Corne shield defaults
+ * to 10 LEDs per side; override the count here without touching wiring.
+ * If fewer LEDs are actually populated, adjust this chain-length.
+ */
+&led_strip {
+    chain-length = <27>;
+};
