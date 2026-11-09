@@ -23,7 +23,7 @@ O RMK pode utilizar a região da flash originalmente ocupada pelo SoftDevice, en
    - `corne-right-nosd.uf2`: controladora direita.
    - `settings-reset-nosd.uf2`: limpeza opcional de configurações persistentes.
 
-O GitHub Actions **não** executa automaticamente nessa branch quando há commits; use **Run workflow** manualmente.
+O GitHub Actions compila automaticamente quando há commits nesta branch. Você também pode usar **Run workflow** manualmente.
 
 ## Teste com o controlador solto
 
