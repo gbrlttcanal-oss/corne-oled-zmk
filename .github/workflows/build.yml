@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - sofle_hybrid_rgb_rev5
+      - recovery/zmk-after-rmk-nosd
   workflow_dispatch:
 
 permissions:
